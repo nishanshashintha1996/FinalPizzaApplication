@@ -119,8 +119,8 @@
                         android:id="@+id/recycleView02"
                         android:layout_width="match_parent"
                         android:layout_height="350dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp" />
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp" />
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="wrap_content"

@@ -1,47 +1,31 @@
 package com.example.pizzaapp;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class SingleViewActivity extends AppCompatActivity {
-    Dialog dialog;
     private static String sts_now ="";
-    private static int check_availability;
-    private static String title_gone;
+    private static int exId;
+    private static String location;
     private static int checkout_item_count = 0;
     public int countItem = 1;
     private static double cartTotal = 0;
     private static double DouPrice = 0;
     private static double newDouPrice = 0;
-    Button plus,minus ,addtoCart ,checkout_btn, button_logout;
-    private Context mCtx;
-    private List<ProductClass> productClassList;
+    Button plus,minus ,addtoCart ,checkout_btn;
     ImageView imageView;
     TextView count , title, description ,rating , status , price ,items_count , warning;
     private static final String TAG = "SingleViewActivity";
@@ -74,11 +58,6 @@ public class SingleViewActivity extends AppCompatActivity {
         }else{
             warning.setText("");
         }
-
-
-
-
-
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,19 +73,19 @@ public class SingleViewActivity extends AppCompatActivity {
                 ActiveCount(sta);
             }
         });
-
-
         imageView = findViewById(R.id.image);
         Intent intent = getIntent();
+        exId = intent.getIntExtra("id",0);
+        //Toast.makeText(this,""+exId,Toast.LENGTH_LONG).show();
         String exTitle =intent.getStringExtra("title");
         String exDescription =intent.getStringExtra("description" );
-        UserIdSession.setItemName(exDescription);
         String exRating =intent.getStringExtra("rating");
         String exStatus =intent.getStringExtra("status");
         String exImage =intent.getStringExtra("image");
         String exPrice =intent.getStringExtra("price");
         sts_now = intent.getStringExtra("sts");
         DouPrice = intent.getDoubleExtra("DouPrice",DouPrice);
+        location = intent.getStringExtra("location");
 
         items_count.setText("Items:"+checkout_item_count);
         title = findViewById(R.id.title);
@@ -114,7 +93,6 @@ public class SingleViewActivity extends AppCompatActivity {
         description = findViewById(R.id.description_text);
         price = findViewById(R.id.Price);
         status = findViewById(R.id.Status);
-        title_gone = exDescription;
         title.setText(exDescription);
         rating.setText(exRating);
         price.setText("Price : "+DouPrice+"0 LKR");
@@ -122,20 +100,14 @@ public class SingleViewActivity extends AppCompatActivity {
         status.setText(exStatus);
         description.setText(exTitle);
         loadImage(exImage);
-
-
-
-
     }
 
     public void addtocart(View view) {
-        addToCartDone("Nishan",countItem,1500.00);
+        addToCartDone(exId,countItem,location);
     }
 
-    private void addToCartDone(String itemName, int itemQuantity ,Double retailPrice){
-        //Toast.makeText(SingleViewActivity.this,"User Id"+UserIdSession.getUsId()+"Item name"+UserIdSession.getUserName()+"Price"+newDouPrice+"Item Quantity"+countItem,Toast.LENGTH_LONG).show();
-        //String name = "Nishan";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,"http://"+UserIdSession.getIpAdress()+":8080/system/addToCart?customerId="+UserIdSession.getUsId()+"&itemName="+itemName+"&lat="+6.2+"&lon="+72.012+"&itemQuantity="+itemQuantity+"&itemTotal="+(retailPrice*itemQuantity)+"",
+    private void addToCartDone(int itemId, int itemQuantity ,String location){
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,"http://"+UserIdSession.getIpAdress()+":8080/system/addToCart?customerId="+UserIdSession.getUsId()+"&itemId="+itemId+"&itemQuantity="+itemQuantity+"&itemLocation="+location+"",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -145,7 +117,7 @@ public class SingleViewActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(SingleViewActivity.this,"Error :"+error,Toast.LENGTH_LONG).show();
-                        /*android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(SingleViewActivity.this);
+                        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(SingleViewActivity.this);
                         builder.setTitle("Warning!")
                                 .setMessage("Server connection error").setCancelable(false)
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -153,7 +125,7 @@ public class SingleViewActivity extends AppCompatActivity {
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         SingleViewActivity.super.onBackPressed();
                                     }
-                                }).create().show();*/
+                                }).create().show();
 
             }
         });

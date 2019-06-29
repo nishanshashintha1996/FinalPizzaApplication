@@ -40,24 +40,25 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         final ProductClass ProductClass = productClassList.get(position);
 
-        //productViewHolder.textViewDesc.setText(ProductClass.getTitle());
+        productViewHolder.textViewDesc.setText(ProductClass.getTitle());
         productViewHolder.textViewTitle.setText(ProductClass.getShortdesc());
-        productViewHolder.textViewPrice.setText(String.valueOf(ProductClass.getPrice()));
+        productViewHolder.textViewPrice.setText(String.valueOf(ProductClass.getPrice())+"0 LKR");
         productViewHolder.textViewRating.setText(String.valueOf(ProductClass.getRating()));
-        productViewHolder.textViewstatus.setText(ProductClass.getStatus());
+        //productViewHolder.textViewstatus.setText(ProductClass.getStatus());
         productViewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mCtx, SingleViewActivity.class);
+                intent.putExtra("id",ProductClass.getId());
                 intent.putExtra("title", ProductClass.getTitle());
                 intent.putExtra("description", ProductClass.getShortdesc());
                 intent.putExtra("rating", String.valueOf(ProductClass.getRating()));
                 intent.putExtra("status", ProductClass.getStatus());
                 intent.putExtra("image", ProductClass.getImage());
                 intent.putExtra("price", String.valueOf(ProductClass.getPrice()));
+                intent.putExtra("location","products");
                 DouPrice = ProductClass.getPrice();
                 intent.putExtra("DouPrice", DouPrice);
-                UserIdSession.setItemName(ProductClass.getShortdesc());
                 mCtx.startActivity(intent);
             }
         });
@@ -77,14 +78,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
-        TextView textViewTitle, textViewDesc, textViewRating, textViewPrice, textViewstatus;
+        TextView textViewTitle, textViewDesc, textViewRating, textViewPrice;
         RelativeLayout relativeLayout;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
 
             relativeLayout = itemView.findViewById(R.id.relative);
-            textViewstatus = itemView.findViewById(R.id.textViewstatus);
             imageView = itemView.findViewById(R.id.imageView);
             textViewTitle = itemView.findViewById(R.id.textViewTitle);
             textViewDesc = itemView.findViewById(R.id.textViewShortDesc);

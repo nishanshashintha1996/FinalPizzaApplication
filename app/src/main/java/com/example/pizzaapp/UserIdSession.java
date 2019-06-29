@@ -5,14 +5,14 @@ public class UserIdSession {
     private static String usId;
     private static String userName;
     private static String ipAdress;
-    private static String itemName;
+    private static int itemId;
 
-    public static String getItemName() {
-        return itemName;
+    public static int getItemId() {
+        return itemId;
     }
 
-    public static void setItemName(String itemName) {
-        UserIdSession.itemName = itemName;
+    public static void setItemId(int itemId) {
+        UserIdSession.itemId = itemId;
     }
 
     public static String getUserName() {

@@ -14,100 +14,94 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/parent">
-
         <android.support.v7.widget.CardView
             android:background="@color/gradientStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp">
-
             <RelativeLayout
                 android:id="@+id/relative"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/layout_rounded_coners"
-                android:backgroundTint="@color/gradientStart"
-
-                android:padding="8dp">
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="120dp"
-                    android:layout_height="110dp"
-                    android:padding="4dp" />
-
-                <TextView
-                    android:id="@+id/textViewTitle"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:background="@drawable/grad_bg"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@id/imageView"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:text="Apple MacBook"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                    android:textColor="#010b13" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_margin="5dp"
+                        android:background="@drawable/title_bar_background"
+                        android:id="@+id/imageView"
+                        android:layout_width="120dp"
+                        android:layout_height="110dp"
+                        android:padding="5dp" />
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/title_bar_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:id="@+id/textViewTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toRightOf="@id/imageView"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:text="Apple MacBook"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:textColor="#010b13" />
 
-                <TextView
-                    android:id="@+id/textViewShortDesc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/textViewTitle"
-                    android:layout_marginLeft="5dp"
-                    android:text=""
-                    android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@id/imageView"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
-
-                <TextView
-                    android:id="@+id/textViewRating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/textViewShortDesc"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@id/imageView"
-                    android:background="@color/colorPrimary"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:text="4.7"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small.Inverse"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textViewstatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/textViewShortDesc"
-                    android:layout_marginLeft="65dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@id/imageView"
-                    android:background="@color/colorstasus"
-                    android:layout_alignLeft="@id/textViewRating"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:text="New"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small.Inverse"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textViewPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/textViewRating"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@id/imageView"
-                    android:text="INR 56990"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                    android:textStyle="bold" />
-
-
-
+                        <TextView
+                            android:id="@+id/textViewShortDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/textViewTitle"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:text="short description"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@id/imageView"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_gravity="bottom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/textViewRating"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/textViewShortDesc"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_toRightOf="@id/imageView"
+                                android:background="@color/colorPrimary"
+                                android:paddingLeft="15dp"
+                                android:paddingRight="15dp"
+                                android:text="4.7"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small.Inverse"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/textViewPrice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/textViewRating"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_toRightOf="@id/imageView"
+                                android:text="INR 56990"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
             </RelativeLayout>
-
         </android.support.v7.widget.CardView>
-
     </LinearLayout>
-
 </LinearLayout>

@@ -37,27 +37,25 @@ public class HotProductAdapter extends RecyclerView.Adapter<HotProductAdapter.Ho
 
         final HotProductsClass HotProductClass = hotProductsClassList.get(position);
 
-        hotProductViewHolder.textViewDesc.setText("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has ");
+        hotProductViewHolder.textViewDesc.setText(HotProductClass.getTitle());
         hotProductViewHolder.textViewTitle.setText(HotProductClass.getShortdesc());
-        //hotProductViewHolder.textViewTitle.setText("");
-        hotProductViewHolder.textViewPrice.setText(String.valueOf(HotProductClass.getPrice()));
-        //hotProductViewHolder.textViewPrice.setText("");
+        hotProductViewHolder.textViewPrice.setText(String.valueOf(HotProductClass.getPrice())+"0 LKR");
         hotProductViewHolder.textViewRating.setText(String.valueOf(HotProductClass.getRating()));
-        //hotProductViewHolder.textViewRating.setText("");
-        hotProductViewHolder.textViewstatus.setText(HotProductClass.getStatus());
-        //hotProductViewHolder.textViewstatus.setText("");
+        //hotProductViewHolder.textViewstatus.setText(HotProductClass.getStatus());
 
 
         hotProductViewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mCtx, SingleViewActivity.class);
+                intent.putExtra("id",HotProductClass.getId());
                 intent.putExtra("title", HotProductClass.getTitle());
                 intent.putExtra("description", HotProductClass.getShortdesc());
                 intent.putExtra("rating", String.valueOf(HotProductClass.getRating()));
                 intent.putExtra("status", HotProductClass.getStatus());
                 intent.putExtra("image", HotProductClass.getImage());
                 intent.putExtra("price", String.valueOf(HotProductClass.getPrice()));
+                intent.putExtra("location","hotProducts");
                 DouPrice = HotProductClass.getPrice();
                 intent.putExtra("DouPrice", DouPrice);
                 mCtx.startActivity(intent);
@@ -79,14 +77,13 @@ public class HotProductAdapter extends RecyclerView.Adapter<HotProductAdapter.Ho
     class HotProductViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
-        TextView textViewTitle, textViewDesc, textViewRating, textViewPrice, textViewstatus;
+        TextView textViewTitle, textViewDesc, textViewRating, textViewPrice;
         RelativeLayout relativeLayout;
 
         public HotProductViewHolder(View itemView) {
             super(itemView);
 
             relativeLayout = itemView.findViewById(R.id.relative);
-            textViewstatus = itemView.findViewById(R.id.textViewstatus);
             imageView = itemView.findViewById(R.id.imageView);
             textViewTitle = itemView.findViewById(R.id.textViewTitle);
             textViewDesc = itemView.findViewById(R.id.textViewShortDesc);

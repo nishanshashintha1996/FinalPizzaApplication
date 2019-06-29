@@ -1,10 +1,17 @@
 package com.example.pizzaapp;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
+import android.location.LocationManager;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,21 +31,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
+    private static final int MY_PERMISION_REQUEST_CODE = 1;
     Dialog myDialog;
     private EditText email, password;
     private ProgressBar loading;
     private static String sentURL="";
     private Button signUpButton,loginButton;
     Connection_Detector connection_detector;
+    boolean gps_enabled = false;
+    boolean network_enabled = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        LocationManager lm = (LocationManager)LoginActivity.this.getSystemService(Context.LOCATION_SERVICE);
         myDialog = new Dialog(this);
         connection_detector=new Connection_Detector(this);
         loading = findViewById(R.id.log_loading);
         email = findViewById(R.id.log_email);
         password = findViewById(R.id.log_password);
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch(Exception ex) {}
+
+        try {
+            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        }catch(Exception ex) {}
         if (connection_detector.isConnected())
         {
         }else
@@ -49,16 +67,22 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (connection_detector.isConnected())
                 {
                     String mEmail = email.getText().toString().trim();
                     String mPassword = password.getText().toString().trim();
-
                     if(!mEmail.isEmpty()){
                         if(mEmail.indexOf('@')!=-1){
                             if(mEmail.indexOf('.')!=-1){
                                 if(!mPassword.isEmpty()){
-                                    loginFuncton(mEmail,mPassword);
+                                    if(gps_enabled) {
+                                        loginFuncton(mEmail,mPassword);
+                                        GPSTracker gpsTracker = new GPSTracker(getApplicationContext());
+                                        Location location = gpsTracker.getLocation();
+                                    }else{
+                                        Toast.makeText(getApplicationContext(),"Please Enable Location Service First!",Toast.LENGTH_LONG).show();
+                                    }
                                 }else{
                                     password.setError("Please insert Password");
                                 }
@@ -156,6 +180,22 @@ public class LoginActivity extends AppCompatActivity {
                 }).create().show();
 
 
+    }
+
+    private void setUpLocation() {
+        if(android.support.v4.app.ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        && android.support.v4.app.ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            requestRuntimePermission();
+        }
+    }
+
+    private void requestRuntimePermission() {
+        android.support.v4.app.ActivityCompat.requestPermissions(this, new String[]{
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+        },MY_PERMISION_REQUEST_CODE);
     }
 
     public void connectionStatus(){

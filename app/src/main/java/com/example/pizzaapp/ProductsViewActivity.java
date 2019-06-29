@@ -154,7 +154,7 @@ public class ProductsViewActivity extends AppCompatActivity {
     }
 
     private void loadHotProducts() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://" + UserIdSession.getIpAdress() + ":8080/system/getAllProducts",
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://" + UserIdSession.getIpAdress() + ":8080/system/getAllHotProducts",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -163,7 +163,7 @@ public class ProductsViewActivity extends AppCompatActivity {
                             for (int i = 0; i < products.length(); i++) {
                                 JSONObject productObject = products.getJSONObject(i);
 
-                                int id = productObject.getInt("id");
+                                int id = productObject.getInt("hotPizzaId");
                                 String title = productObject.getString("title");
                                 String shortDescription = productObject.getString("shortdesc");
                                 double price = productObject.getDouble("price");
