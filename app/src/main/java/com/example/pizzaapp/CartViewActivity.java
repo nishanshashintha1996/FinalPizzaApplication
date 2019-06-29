@@ -33,13 +33,16 @@ import java.util.List;
 import java.util.Locale;
 
 public class CartViewActivity extends AppCompatActivity {
+    private static String sts_now = "";
+    RecyclerView recyclerView;
     ProgressBar loading;
     RadioGroup btnGroup;
     RadioButton autoCheck,manualCheck;
-    RecyclerView cartRecycleView;
     Geocoder geocoder;
     List<Address> addresses;
     EditText editTextAddress,editTextCity;
+    CartItemAdapter cartItemAdapter;
+    List<CartItemClass> cartItemClassList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,7 @@ public class CartViewActivity extends AppCompatActivity {
         geocoder = new Geocoder(this,Locale.getDefault());
         editTextAddress = findViewById(R.id.address);
         editTextCity = findViewById(R.id.city);
+        recyclerView = findViewById(R.id.cartRecyclerView);
         loading = findViewById(R.id.loading);
         loading.setVisibility(View.GONE);
         ActivityCompat.requestPermissions(CartViewActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},123);
@@ -61,6 +65,7 @@ public class CartViewActivity extends AppCompatActivity {
                 editTextCity.setText("");
             }
         });
+
         autoCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,12 +96,10 @@ public class CartViewActivity extends AppCompatActivity {
                 }
             }
         });
-        cartRecycleView = findViewById(R.id.cartRecyclerView);
-        cartRecycleView.setHasFixedSize(true);
-        cartRecycleView.setLayoutManager(new LinearLayoutManager(this));
+        loadCartItems();
     }
-    private void loadHotProducts() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://" + UserIdSession.getIpAdress() + ":8080/system/getAllHotProducts",
+    private void loadCartItems() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://192.168.43.66:8080/system/getAllProducts",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -104,7 +107,6 @@ public class CartViewActivity extends AppCompatActivity {
                             JSONArray products = new JSONArray(response);
                             for (int i = 0; i < products.length(); i++) {
                                 JSONObject productObject = products.getJSONObject(i);
-
                                 int id = productObject.getInt("hotPizzaId");
                                 String title = productObject.getString("title");
                                 String shortDescription = productObject.getString("shortdesc");
@@ -112,11 +114,11 @@ public class CartViewActivity extends AppCompatActivity {
                                 double rating = productObject.getDouble("rating");
                                 String image = productObject.getString("image");
                                 String status = productObject.getString("status");
-                                HotProductsClass hotProductsClass = new HotProductsClass(id, title, shortDescription, rating, price, image, status, sts_now);
-                                hotProductClassList.add(hotProductsClass);
+                                CartItemClass cartItemClass = new CartItemClass(id, title, shortDescription, rating, price, image, status, sts_now);
+                                cartItemClassList.add(cartItemClass);
                             }
-                            hotAdapter = new HotProductAdapter(CartViewActivity.this, hotProductClassList);
-                            recyclerView02.setAdapter(hotAdapter);
+                            cartItemAdapter = new CartItemAdapter(CartViewActivity.this, cartItemClassList);
+                            recyclerView.setAdapter(cartItemAdapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -136,7 +138,7 @@ public class CartViewActivity extends AppCompatActivity {
 
             }
         });
-        Volley.newRequestQueue(this).add(stringRequest);
+        Volley.newRequestQueue(CartViewActivity.this).add(stringRequest);
     }
 
     public void onBackPressed() {
