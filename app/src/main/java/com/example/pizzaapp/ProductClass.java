@@ -9,9 +9,6 @@ public class ProductClass {
     private String image;
     private String status;
 
-
-
-
     public ProductClass(int id, String title, String shortdesc, double rating, double price, String image, String status, String sts_now) {
         this.id = id;
         this.title = title;

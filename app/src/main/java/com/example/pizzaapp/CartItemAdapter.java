@@ -37,14 +37,14 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
 
         final CartItemClass CartItemClass = cartItemClassList.get(position);
 
-        cartItemViewHolder.textViewDesc.setText(CartItemClass.getTitle());
-        cartItemViewHolder.textViewTitle.setText(CartItemClass.getShortdesc());
-        cartItemViewHolder.textViewPrice.setText(String.valueOf(CartItemClass.getPrice())+"0 LKR");
-        cartItemViewHolder.textViewRating.setText(String.valueOf(CartItemClass.getRating()));
+        cartItemViewHolder.textViewDesc.setText("description");
+        cartItemViewHolder.textViewTitle.setText("Title");
+        cartItemViewHolder.textViewPrice.setText(CartItemClass.getItemLocation());
+        cartItemViewHolder.textViewRating.setText(CartItemClass.getItemStatus());
         //cartItemViewHolder.textViewstatus.setText(CartItemClass.getStatus());
 
 
-        cartItemViewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+        /*cartItemViewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mCtx, SingleViewActivity.class);
@@ -60,7 +60,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
                 intent.putExtra("DouPrice", DouPrice);
                 mCtx.startActivity(intent);
             }
-        });
+        });*/
 
 
         /*Glide.with(mCtx)

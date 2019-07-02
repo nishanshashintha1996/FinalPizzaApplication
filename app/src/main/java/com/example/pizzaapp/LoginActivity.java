@@ -76,13 +76,9 @@ public class LoginActivity extends AppCompatActivity {
                         if(mEmail.indexOf('@')!=-1){
                             if(mEmail.indexOf('.')!=-1){
                                 if(!mPassword.isEmpty()){
-                                    if(gps_enabled) {
-                                        loginFuncton(mEmail,mPassword);
-                                        GPSTracker gpsTracker = new GPSTracker(getApplicationContext());
-                                        Location location = gpsTracker.getLocation();
-                                    }else{
-                                        Toast.makeText(getApplicationContext(),"Please Enable Location Service First!",Toast.LENGTH_LONG).show();
-                                    }
+                                    loginFuncton(mEmail,mPassword);
+                                    GPSTracker gpsTracker = new GPSTracker(getApplicationContext());
+                                    Location location = gpsTracker.getLocation();
                                 }else{
                                     password.setError("Please insert Password");
                                 }
@@ -260,13 +256,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void OpenSettings(View view) {
-        Button btn_settings;
+        Button btn_settings,btnExit;
         myDialog.setContentView(R.layout.settings_popup_for_before_login);
         btn_settings = myDialog.findViewById(R.id.settings_btn);
+        btnExit = myDialog.findViewById(R.id.exit_btn);
         btn_settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ShowPopup();
+            }
+        });
+        btnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Exitnow();
             }
         });
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

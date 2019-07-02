@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -35,6 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
+            android:paddingBottom="15dp"
             android:layout_below="@+id/titleBar"
             android:layout_margin="5dp"
             android:background="@drawable/title_bar_background"
@@ -65,9 +65,11 @@
                     android:padding="5dp"
                     android:textSize="15dp"/>
                 <LinearLayout
+                    android:background="@drawable/title_bar_background"
+                    android:layout_gravity="center_horizontal"
                     android:padding="10dp"
                     android:orientation="horizontal"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <ProgressBar
                         android:background="@color/white"
@@ -125,10 +127,9 @@
                         android:textSize="15dp"/>
                     <EditText
                         android:id="@+id/address"
-                        android:textStyle="italic"
                         android:textColorHint="@color/white"
                         android:hint="‎340 Heather Keys, West Ianhaven, B..."
-                        android:textSize="12dp"
+                        android:textSize="13dp"
                         android:textColor="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -147,10 +148,9 @@
                         android:textSize="15dp"/>
                     <EditText
                         android:id="@+id/city"
-                        android:textStyle="italic"
                         android:textColorHint="@color/white"
                         android:hint="West Ianhaven"
-                        android:textSize="12dp"
+                        android:textSize="13dp"
                         android:textColor="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -171,7 +171,243 @@
                     android:textColor="@color/white"
                     android:padding="5dp"
                     android:textSize="15dp"/>
-                
+
+                <EditText
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15dp"
+                    android:textColor="@color/white"
+                    android:hint="Enter your NIC"
+                    android:textColorHint="@color/white"
+                    android:id="@+id/nicNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textColor="@color/white"
+                    android:textSize="15dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:text="Is this order or gift?"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/title_bar_background"
+                    android:padding="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <RadioGroup
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="10dp"
+                            android:text="Yes :"
+                            android:textColor="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <RadioButton
+                            android:id="@+id/giftRadioButtonYes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="10dp"
+                            android:text="No :"
+                            android:textColor="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <RadioButton
+                            android:id="@+id/giftRadioButtonNo"
+                            android:layout_marginRight="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RadioGroup>
+                    <TextView
+                        android:layout_gravity="center_horizontal"
+                        android:textSize="15dp"
+                        android:textColor="@color/colorstasus"
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/btnRadioLableText"
+                        android:text=""
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Payment methord option"
+                    android:textColor="@color/white"
+                    android:padding="5dp"
+                    android:textSize="15dp"/>
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/title_bar_background"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <RadioGroup
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@mipmap/visa"/>
+                        <RadioButton
+                            android:id="@+id/visaRadioButton"
+                            android:textColorHighlight="@color/white"
+                            android:layout_marginLeft="5dp"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="50dp"
+                            android:src="@mipmap/cash_on_delivery"/>
+                        <RadioButton
+                            android:id="@+id/paypalRadioButton"
+                            android:textColorHighlight="@color/white"
+                            android:layout_marginLeft="5dp"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RadioGroup>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/visaCardLayout"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="15dp"
+                        android:textColor="@color/white"
+                        android:hint="Card Number"
+                        android:textColorHint="@color/white"
+                        android:id="@+id/cardNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"/>
+                    <LinearLayout
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:layout_marginRight="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:textSize="15dp"
+                            android:textColor="@color/white"
+                            android:hint="MM/YY"
+                            android:textColorHint="@color/white"
+                            android:id="@+id/expDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <EditText
+                            android:layout_marginRight="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:textSize="15dp"
+                            android:textColor="@color/white"
+                            android:hint="CVC"
+                            android:textColorHint="@color/white"
+                            android:id="@+id/cvc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/paypalLayout"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="15dp"
+                        android:textColor="@color/white"
+                        android:hint="Email (Paypal)"
+                        android:textColorHint="@color/white"
+                        android:id="@+id/paypalEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"/>
+                    <EditText
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="15dp"
+                        android:textColor="@color/white"
+                        android:hint="Password (Paypal)"
+                        android:textColorHint="@color/white"
+                        android:id="@+id/paypalPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layoutAgreement"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/title_bar_background"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <CheckBox
+                        android:id="@+id/agreeWith"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:text="I agree with the terms and conditions"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/agreemntContent"
+                    android:layout_marginRight="5dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="5dp"
+                    android:padding="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/temsAndConditions"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="italic"
+                        android:textColor="@color/white"
+                        android:text="Read terms and conditions"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <Button
+                    android:id="@+id/btnCheckout"
+                    android:layout_marginBottom="30dp"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:text="Proceed to checkout"
+                    android:background="@drawable/btn_background"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

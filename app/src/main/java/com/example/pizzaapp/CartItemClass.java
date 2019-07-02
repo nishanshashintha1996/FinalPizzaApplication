@@ -1,85 +1,68 @@
 package com.example.pizzaapp;
 
 public class CartItemClass {
-    private int id;
-    private String title,shortdesc ,sts_now;
-    private double rating;
-    private double price;
-    private String image;
-    private String status;
 
-    public CartItemClass(int id, String title, String shortdesc, double rating, double price, String image, String status, String sts_now) {
-        this.id = id;
-        this.title = title;
-        this.shortdesc = shortdesc;
-        this.sts_now = sts_now;
-        this.rating = rating;
-        this.price = price;
-        this.image = image;
-        this.status = status;
+    private int cartId ;
+    private int  customerId ;
+    private int itemId ;
+    private int itemQuantity  ;
+    private String itemStatus ;
+    private String itemLocation ;
+
+    public CartItemClass(int cartId, int customerId, int itemId, int itemQuantity, String itemStatus, String itemLocation) {
+        this.cartId = cartId;
+        this.customerId = customerId;
+        this.itemId = itemId;
+        this.itemQuantity = itemQuantity;
+        this.itemStatus = itemStatus;
+        this.itemLocation = itemLocation;
     }
 
-    public int getId() {
-        return id;
+    public int getCartId() {
+        return cartId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
     }
 
-    public String getTitle() {
-        return title;
+    public int getCustomerId() {
+        return customerId;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
-    public String getShortdesc() {
-        return shortdesc;
+    public int getItemId() {
+        return itemId;
     }
 
-    public void setShortdesc(String shortdesc) {
-        this.shortdesc = shortdesc;
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 
-    public String getSts_now() {
-        return sts_now;
+    public int getItemQuantity() {
+        return itemQuantity;
     }
 
-    public void setSts_now(String sts_now) {
-        this.sts_now = sts_now;
+    public void setItemQuantity(int itemQuantity) {
+        this.itemQuantity = itemQuantity;
     }
 
-    public double getRating() {
-        return rating;
+    public String getItemStatus() {
+        return itemStatus;
     }
 
-    public void setRating(double rating) {
-        this.rating = rating;
+    public void setItemStatus(String itemStatus) {
+        this.itemStatus = itemStatus;
     }
 
-    public double getPrice() {
-        return price;
+    public String getItemLocation() {
+        return itemLocation;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setItemLocation(String itemLocation) {
+        this.itemLocation = itemLocation;
     }
 }
