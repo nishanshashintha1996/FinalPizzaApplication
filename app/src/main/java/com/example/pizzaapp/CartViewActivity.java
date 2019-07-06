@@ -33,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -40,6 +41,7 @@ import java.util.Map;
 
 public class CartViewActivity extends AppCompatActivity {
     private static String sts_now = "";
+    private static String globeAddress,globeCity,globeNIC,globeOrderType;
     Button checkout;
     LinearLayout visaDetailsLayout,paypalDetailsLayout,agreement,agreemntContentLayout;
     RecyclerView recyclerView;
@@ -48,10 +50,10 @@ public class CartViewActivity extends AppCompatActivity {
     RadioButton autoCheck,manualCheck,yesRadioButton,noRadioButton,visaMethord,paypalMethord;
     Geocoder geocoder;
     List<Address> addresses;
-    EditText editTextAddress,editTextCity;
+    EditText editTextAddress,editTextCity,nicNumberView;
     TextView btnLableText,temsAndConditionsText;
     CartItemAdapter cartItemAdapter;
-    List<CartItemClass> cartItemClassList;
+//    List<CartItemClass> cartItemClassList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +61,7 @@ public class CartViewActivity extends AppCompatActivity {
         geocoder = new Geocoder(this,Locale.getDefault());
         editTextAddress = findViewById(R.id.address);
         editTextCity = findViewById(R.id.city);
+        nicNumberView = findViewById(R.id.nicNumber);
         temsAndConditionsText = findViewById(R.id.temsAndConditions);
         visaMethord = findViewById(R.id.visaRadioButton);
         visaDetailsLayout = findViewById(R.id.visaCardLayout);
@@ -150,6 +153,7 @@ public class CartViewActivity extends AppCompatActivity {
             }
         });
         loadCartItems();
+
         autoCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,8 +168,10 @@ public class CartViewActivity extends AppCompatActivity {
                         addresses = geocoder.getFromLocation(lat, lon, 1);
                         String address = addresses.get(0).getAddressLine(0);
                         editTextAddress.setText(address);
+                        globeAddress = address;
                         String city = addresses.get(0).getLocality();
                         editTextCity.setText(city);
+                        globeCity = city;
                     } catch (IOException e) {
                         e.printStackTrace();
                         Toast.makeText(getApplicationContext(),"Error: "+e,Toast.LENGTH_LONG).show();
@@ -180,17 +186,74 @@ public class CartViewActivity extends AppCompatActivity {
                 }
             }
         });
+        checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nICNumber = String.valueOf(nicNumberView.getText());
+                StringRequest stringRequest = new StringRequest(Request.Method.GET,"http://"+ UserIdSession.getIpAdress() +":8080/system/addToCustomerCart?nic="+nICNumber+"&&address="+globeAddress+"&&city="+globeCity+"",
+                        new Response.Listener<String>(){
+                            @Override
+                            public void onResponse(String response){
+                                Toast.makeText(CartViewActivity.this,response,Toast.LENGTH_LONG).show();
+                            }
+                        },
+                        new Response.ErrorListener(){
+                            @Override
+                            public void onErrorResponse(VolleyError error){
+                                Toast.makeText(CartViewActivity.this,"Error!" + error.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        return params;
+                    }
+                };
 
+                RequestQueue requestQueue = Volley.newRequestQueue(CartViewActivity.this);
+                requestQueue.add(stringRequest);
+            }
+        });
 
     }
+
+    private void deleteItemInCart(int customerId,int cartId){
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,"http://"+ UserIdSession.getIpAdress() +":8080/system/getAllCartDetails",
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response){
+                        Toast.makeText(CartViewActivity.this,response,Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error){
+                        Toast.makeText(CartViewActivity.this,"Error!" + error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
     private void loadCartItems() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,"http://172.16.41.77:8080/system/getAllCartDetails",
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,"http://"+ UserIdSession.getIpAdress() +":8080/system/getAllCartDetails",
                 new Response.Listener<String>(){
                     @Override
                     public void onResponse(String response){
                         Toast.makeText(CartViewActivity.this,response,Toast.LENGTH_LONG).show();
                         try {
+                            CartItemAdapter cartItemAdapter;
                             JSONArray cartProducts = new JSONArray(response);
+                            List<CartItemClass> cartItemClassList = new ArrayList<>();
                             for (int i = 0; i < cartProducts.length(); i++) {
                                 JSONObject cartProductObject = cartProducts.getJSONObject(i);
                                 int cartId = cartProductObject.getInt("cartId");
@@ -200,10 +263,10 @@ public class CartViewActivity extends AppCompatActivity {
                                 String itemStatus = cartProductObject.getString("itemStatus");
                                 String itemLocation = cartProductObject.getString("itemLocation");
                                 CartItemClass CartItemClass = new CartItemClass(cartId,customerId,itemId,itemQuantity,itemStatus,itemLocation);
-                                //cartItemClassList.add(CartItemClass);
+                                cartItemClassList.add(CartItemClass);
                             }
-                            //cartItemAdapter = new CartItemAdapter(CartViewActivity.this, cartItemClassList);
-                            //recyclerView.setAdapter(cartItemAdapter);
+                            cartItemAdapter = new CartItemAdapter(CartViewActivity.this, cartItemClassList);
+                            recyclerView.setAdapter(cartItemAdapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

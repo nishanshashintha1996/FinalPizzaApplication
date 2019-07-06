@@ -12,12 +12,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartItemViewHolder>{
     private static double DouPrice = 0;
     private Context mCtx;
-    private List<CartItemClass> cartItemClassList;
+    private List<CartItemClass> cartItemClassList = new ArrayList<>();
 
     public CartItemAdapter(Context mCtx, List<CartItemClass> cartItemClassList) {
         this.mCtx = mCtx;
@@ -35,12 +36,12 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
     @Override
     public void onBindViewHolder(final CartItemAdapter.CartItemViewHolder cartItemViewHolder, int position) {
 
-        final CartItemClass CartItemClass = cartItemClassList.get(position);
+        CartItemClass cartItemClass = cartItemClassList.get(position);
 
-        cartItemViewHolder.textViewDesc.setText("description");
+        /*cartItemViewHolder.textViewDesc.setText("description");
         cartItemViewHolder.textViewTitle.setText("Title");
         cartItemViewHolder.textViewPrice.setText(CartItemClass.getItemLocation());
-        cartItemViewHolder.textViewRating.setText(CartItemClass.getItemStatus());
+        cartItemViewHolder.textViewRating.setText(CartItemClass.getItemStatus());*/
         //cartItemViewHolder.textViewstatus.setText(CartItemClass.getStatus());
 
 
